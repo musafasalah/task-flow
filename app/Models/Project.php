@@ -15,11 +15,6 @@ class Project extends Model
 {
     use HasFactory, SoftDeletes;
 
-    /**
-     * The model's default attribute values.
-     *
-     * @var array<string, mixed>
-     */
     protected $attributes = [
         'status' => ProjectStatus::Active->value,
     ];
