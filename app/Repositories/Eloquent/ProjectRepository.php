@@ -2,6 +2,7 @@
 
 namespace App\Repositories\Eloquent;
 
+use App\Enums\ProjectStatus;
 use App\Models\Project;
 use App\Models\User;
 use App\Repositories\Contracts\ProjectRepositoryInterface;
@@ -32,5 +33,13 @@ class ProjectRepository implements ProjectRepositoryInterface
     public function delete(Project $project): void
     {
         $project->delete();
+    }
+
+    public function statsForUser(User $user): array
+    {
+        return [
+            'total' => $user->projects()->count(),
+            'active' => $user->projects()->where('status', ProjectStatus::Active)->count(),
+        ];
     }
 }
