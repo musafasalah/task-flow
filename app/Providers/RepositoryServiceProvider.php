@@ -1,0 +1,19 @@
+<?php
+
+namespace App\Providers;
+
+use App\Repositories\Contracts\UserRepositoryInterface;
+use App\Repositories\Eloquent\UserRepository;
+use Illuminate\Support\ServiceProvider;
+
+class RepositoryServiceProvider extends ServiceProvider
+{
+    /**
+     * The repository bindings for the application.
+     *
+     * @var array<class-string, class-string>
+     */
+    public array $bindings = [
+        UserRepositoryInterface::class => UserRepository::class,
+    ];
+}
