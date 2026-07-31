@@ -11,12 +11,6 @@ class AuthService
 {
     public function __construct(private UserRepositoryInterface $users) {}
 
-    /**
-     * Register a new user and issue an API token.
-     *
-     * @param  array<string, mixed>  $data
-     * @return array{user: User, token: string}
-     */
     public function register(array $data): array
     {
         $user = $this->users->create($data);
@@ -27,13 +21,6 @@ class AuthService
         ];
     }
 
-    /**
-     * Authenticate a user by credentials and issue an API token.
-     *
-     * @return array{user: User, token: string}
-     *
-     * @throws ValidationException
-     */
     public function login(string $email, string $password): array
     {
         $user = $this->users->findByEmail($email);
@@ -50,9 +37,6 @@ class AuthService
         ];
     }
 
-    /**
-     * Revoke the token used for the current request.
-     */
     public function logout(User $user): void
     {
         $user->currentAccessToken()->delete();

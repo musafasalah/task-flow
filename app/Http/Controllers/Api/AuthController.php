@@ -14,9 +14,6 @@ class AuthController extends Controller
 {
     public function __construct(private AuthService $authService) {}
 
-    /**
-     * Register a new user and issue an API token.
-     */
     public function register(RegisterRequest $request): JsonResponse
     {
         $result = $this->authService->register($request->validated());
@@ -27,9 +24,6 @@ class AuthController extends Controller
         ], 201);
     }
 
-    /**
-     * Authenticate a user and issue an API token.
-     */
     public function login(LoginRequest $request): JsonResponse
     {
         $result = $this->authService->login(
@@ -43,9 +37,6 @@ class AuthController extends Controller
         ]);
     }
 
-    /**
-     * Revoke the token used for the current request.
-     */
     public function logout(Request $request): JsonResponse
     {
         $this->authService->logout($request->user());
