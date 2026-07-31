@@ -23,6 +23,12 @@ it('returns a JSON 401 for unauthenticated requests', function () {
         ->assertExactJson(['message' => 'Unauthenticated.']);
 });
 
+it('returns a JSON 401 even without an Accept json header', function () {
+    $this->get('/api/dashboard', ['Accept' => 'text/html'])
+        ->assertUnauthorized()
+        ->assertJson(['message' => 'Unauthenticated.']);
+});
+
 it('returns a JSON 422 with an errors object for validation failures', function () {
     Sanctum::actingAs(User::factory()->create());
 
