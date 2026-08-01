@@ -27,6 +27,7 @@ class Task extends Model
             'priority' => TaskPriority::class,
             'status' => TaskStatus::class,
             'due_date' => 'date',
+            'overdue_notified_at' => 'datetime',
         ];
     }
 
@@ -47,5 +48,10 @@ class Task extends Model
         $query->whereNotNull('due_date')
             ->whereDate('due_date', '<', now())
             ->where('status', '!=', TaskStatus::Done);
+    }
+
+    public function scopeNeedingOverdueNotification(Builder $query): void
+    {
+        $query->overdue()->whereNull('overdue_notified_at');
     }
 }

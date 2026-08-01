@@ -6,6 +6,7 @@ use App\Models\Project;
 use App\Models\Task;
 use App\Models\User;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
+use Illuminate\Database\Eloquent\Collection;
 
 interface TaskRepositoryInterface
 {
@@ -18,4 +19,8 @@ interface TaskRepositoryInterface
     public function delete(Task $task): void;
 
     public function statsForUser(User $user): array;
+
+    public function overdueNeedingNotification(): Collection;
+
+    public function markAsNotified(Task $task): void;
 }

@@ -9,6 +9,7 @@ use App\Models\User;
 use App\Repositories\Contracts\TaskRepositoryInterface;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Collection;
 
 class TaskRepository implements TaskRepositoryInterface
 {
@@ -31,8 +32,13 @@ class TaskRepository implements TaskRepositoryInterface
     public function update(Task $task, array $data): Task
     {
         $task->update($data);
+        $task->refresh();
 
-        return $task->refresh();
+        if ($task->overdue_notified_at !== null && ! $task->isOverdue()) {
+            $task->forceFill(['overdue_notified_at' => null])->save();
+        }
+
+        return $task;
     }
 
     public function delete(Task $task): void
@@ -53,5 +59,17 @@ class TaskRepository implements TaskRepositoryInterface
             'pending' => $forUser()->where('status', '!=', TaskStatus::Done)->count(),
             'overdue' => $forUser()->overdue()->count(),
         ];
+    }
+
+    public function overdueNeedingNotification(): Collection
+    {
+        return Task::needingOverdueNotification()
+            ->with('project.user')
+            ->get();
+    }
+
+    public function markAsNotified(Task $task): void
+    {
+        $task->forceFill(['overdue_notified_at' => now()])->save();
     }
 }
