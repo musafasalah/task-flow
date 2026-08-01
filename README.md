@@ -149,7 +149,11 @@ Tests run against an in-memory SQLite database (configured in `phpunit.xml`) —
 
 ## API Documentation
 
-**Base URL:** `{APP_URL}/api` (e.g. `https://task-flow.test/api`)
+**Base URL:** `{APP_URL}/api` — whatever host you run the app on. Common options:
+- `http://localhost:8000/api` — `php artisan serve` or Docker
+- `https://task-flow.test/api` — Laravel Herd/Valet
+
+Set this once as the `base_url` variable in Postman (or the `servers` entry in the OpenAPI spec).
 
 All requests should send:
 ```
@@ -239,7 +243,7 @@ Delivery: **mail** (written to `storage/logs/laravel.log` with the `log` mailer)
 
 ## Postman Collection
 Import **`docs/TaskFlow.postman_collection.json`** into Postman.
-- Set the `base_url` collection variable (default `https://task-flow.test`).
+- Set the `base_url` collection variable to match your host — it defaults to `http://localhost:8000` (works for `php artisan serve` and Docker); change it to `https://task-flow.test` for Herd, or any other URL.
 - Run **Auth → Register** or **Login** first — the `token` is captured automatically and applied to all protected requests. Created project/task IDs are captured too.
 
 ## OpenAPI / Swagger

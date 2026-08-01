@@ -7,10 +7,10 @@ info:
     endpoint aggregates statistics.
   version: 1.0.0
 servers:
+  - url: http://localhost:8000/api
+    description: Local (php artisan serve / Docker) — change to match your host
   - url: https://task-flow.test/api
-    description: Local (Herd/Valet)
-  - url: http://127.0.0.1:8000/api
-    description: Local (artisan serve)
+    description: Local (Laravel Herd/Valet)
 
 tags:
   - name: Auth
