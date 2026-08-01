@@ -1,7 +1,7 @@
 {
   "info": {
     "name": "TaskFlow API",
-    "description": "Task Management System REST API (Laravel + Sanctum).\n\n**Set the `base_url` collection variable to wherever your API runs** — it defaults to `http://localhost:8000` (works for `php artisan serve` and Docker). Change it to `https://task-flow.test` if you use Laravel Herd/Valet, or to any other host.\n\nRun **Auth > Register** or **Auth > Login** first — the `token` variable is captured automatically and used as a Bearer token on all protected requests.",
+    "description": "Task Management System REST API (Laravel + Sanctum).\n\n**Set the `base_url` collection variable to wherever your API runs** — it defaults to `http://localhost:8000` (works for `php artisan serve` and Docker). Change it to `https://task-flow.test` if you use Laravel Herd/Valet, or to any other host.\n\nRun **Auth > Login** first (pre-filled with the seeded account `test@example.com` / `password`, which already has projects and tasks) — the `token` variable is captured automatically and used as a Bearer token on all protected requests. Use **Auth > Register** to create a brand-new account instead.",
     "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
   },
   "variable": [
@@ -71,7 +71,7 @@
             ],
             "body": {
               "mode": "raw",
-              "raw": "{\n    \"email\": \"jane@example.com\",\n    \"password\": \"password123\"\n}"
+              "raw": "{\n    \"email\": \"test@example.com\",\n    \"password\": \"password\"\n}"
             },
             "url": { "raw": "{{base_url}}/api/login", "host": ["{{base_url}}"], "path": ["api", "login"] }
           }
