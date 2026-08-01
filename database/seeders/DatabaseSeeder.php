@@ -17,10 +17,16 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        $demoUser = User::factory()->create([
-            'name' => 'Test User',
-            'email' => 'test@example.com',
-        ]);
+        $demoUser = User::firstOrCreate(
+            ['email' => 'test@example.com'],
+            ['name' => 'Test User', 'password' => 'password'],
+        );
+
+        // Only generate sample data on a fresh database so the seeder is
+        // idempotent and safe to re-run (e.g. on every container start).
+        if (Project::query()->exists()) {
+            return;
+        }
 
         $this->seedProjectsWithTasks($demoUser);
 
